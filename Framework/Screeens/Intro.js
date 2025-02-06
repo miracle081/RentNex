@@ -1,9 +1,10 @@
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { AppButton } from '../Components/AppButton';
 import { Theme } from '../Components/Theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export function Intro() {
+export function Intro({ navigation }) {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
@@ -19,7 +20,13 @@ export function Intro() {
 
                 <View style={{ gap: 10 }}>
                     <AppButton>Get Started</AppButton>
-                    <AppButton style={{ backgroundColor: "white", borderWidth: 1, borderColor: Theme.colors.primary }} textColor={Theme.colors.primary}>Sign In</AppButton>
+                    <AppButton
+                        onPress={() => { navigation.navigate("SignIn") }}
+                        style={{ backgroundColor: "white", borderWidth: 1, borderColor: Theme.colors.primary }}
+                        textColor={Theme.colors.primary}
+                    >
+                        Sign In
+                    </AppButton>
                 </View>
             </View>
         </SafeAreaView>

@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useState, useEffect, useCallback } from 'react';
-import { Intro } from './Framework/Screeens/Intro';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { Lobster_400Regular } from "@expo-google-fonts/lobster"
+import { StackNavigator, } from './Framework/Navigation/Stack';
 
 export default function App() {
 
@@ -37,7 +37,7 @@ export default function App() {
   }
   return (
     <View style={{ flex: 1 }}>
-      <Intro />
+      <StackNavigator />
     </View>
   );
 }
