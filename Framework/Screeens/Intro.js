@@ -8,9 +8,9 @@ export function Intro() {
 
                 <Text style={styles.header}>RentNex</Text>
                 <ScrollView horizontal style={{}}>
-                    <Image source={require("../../assets/intro.jpg")} style={styles.img} />
-                    <Image source={require("../../assets/intro.jpg")} style={styles.img} />
-                    <Image source={require("../../assets/intro.jpg")} style={styles.img} />
+                    <Image source={require("../../assets/slide1.jpg")} style={styles.img} />
+                    <Image source={require("../../assets/slide2.jpg")} style={styles.img} />
+                    <Image source={require("../../assets/slide3.jpg")} style={styles.img} />
                 </ScrollView>
                 <Text style={styles.header}>RentNex</Text>
             </View>
