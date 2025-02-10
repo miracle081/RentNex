@@ -1,7 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { Intro } from "../Screeens/Intro"
-import { Homescreen } from "../Screeens/Homescreen"
-import { SignIn } from "../Screeens/SignIn"
+import { Intro } from "../Screens/Intro"
+import { Homescreen } from "../Screens/Homescreen"
+import { SignIn } from "../Screens/SignIn"
+import { Profile } from "../Screens/Profile"
 import { NavigationContainer } from "@react-navigation/native"
 
 const Stack = createNativeStackNavigator()
@@ -9,10 +10,11 @@ const Stack = createNativeStackNavigator()
 export function StackNavigator() {
     return (
         <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="Intro" component={Intro} />
-                <Stack.Screen name="Homescreen" component={Homescreen} />
-                <Stack.Screen name="SignIn" component={SignIn} />
+            <Stack.Navigator initialRouteName="Intro">
+                <Stack.Screen name="Homescreen" component={Homescreen} options={{ headerShown: false }} />
+                <Stack.Screen name="Intro" component={Intro} options={{ headerShown: false }} />
+                <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+                <Stack.Screen name="Profile" component={Profile} />
             </Stack.Navigator>
         </NavigationContainer>
     )

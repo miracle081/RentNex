@@ -19,7 +19,7 @@ export function Intro({ navigation }) {
                 </View>
 
                 <View style={{ gap: 10 }}>
-                    <AppButton>Get Started</AppButton>
+                    <AppButton onPress={() => { navigation.navigate("Homescreen") }}>Get Started</AppButton>
                     <AppButton
                         onPress={() => { navigation.navigate("SignIn") }}
                         style={{ backgroundColor: "white", borderWidth: 1, borderColor: Theme.colors.primary }}
