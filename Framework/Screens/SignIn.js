@@ -1,11 +1,21 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { useContext } from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { AppContext } from '../Components/globalVariables';
 
-export function SignIn({ navigation }) {
+export function SignIn({ navigation, route }) {
+    const { userInfo, userUID } = useContext(AppContext)
+    console.log(userInfo);
+
+
+    const { userID } = route.params
     return (
-        <View>
-            <Text>SignIn</Text>
-        </View>
+        <SafeAreaView>
+            <View>
+                <Text>SignIn</Text>
+                <Text>User Id: {userID}, {userUID}</Text>
+            </View>
+        </SafeAreaView>
     )
 }
 

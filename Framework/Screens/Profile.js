@@ -11,6 +11,8 @@ export function Profile({ navigation }) {
         <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
             <View style={styles.container}>
                 <Text>Profile</Text>
+                <AppButton onPress={() => navigation.navigate("EditProfile")}
+                    style={{ borderColor: Theme.colors.green, borderWidth: 1 }} buttonColor={"#ffffff0d"} textColor={Theme.colors.green}>Edit Profile</AppButton>
 
                 <AppButton onPress={() => setVisibility(true)}
                     style={{ borderColor: Theme.colors.red, borderWidth: 1 }} buttonColor={"#ffffff0d"} textColor={Theme.colors.red}>Log Out</AppButton>
