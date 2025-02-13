@@ -8,7 +8,9 @@ import * as yup from "yup"
 // import { auth } from '../Firebase/settings';
 import { AppContext } from '../Components/globalVariables';
 import { AppButton } from '../Components/AppButton';
-// import { errorMessage } from '../Components/formatErrorMessage';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../Firebase/settings';
+import { errorMessage } from '../Components/formatErrorMessage';
 
 export function SignIn({ navigation }) {
     const { setUserUID, setPreloader } = useContext(AppContext);
@@ -19,8 +21,14 @@ export function SignIn({ navigation }) {
                 <Formik
                     initialValues={{ email: "", password: "" }}
                     onSubmit={(value) => {
-                        console.log(value);
-
+                        signInWithEmailAndPassword(auth, value.email, value.password)
+                            .then(() => {
+                                navigation.navigate("Homescreen")
+                            })
+                            .catch(e => {
+                                console.log(e);
+                                Alert.alert("Error!", errorMessage(e.code))
+                            })
                     }}
                 >
                     {(prop) => {

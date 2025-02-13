@@ -4,13 +4,19 @@ import { Theme } from '../Components/Theme';
 import { Button, } from 'react-native-paper';
 import { Formik } from 'formik';
 import * as yup from "yup"
-// import { signInWithEmailAndPassword } from 'firebase/auth';
-// import { auth } from '../Firebase/settings';
 import { AppContext } from '../Components/globalVariables';
 import { AppButton } from '../Components/AppButton';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/settings';
-// import { errorMessage } from '../Components/formatErrorMessage';
+import { errorMessage } from '../Components/formatErrorMessage';
+
+const validation = yup.object({
+    firstname: yup.string().min(3).required(),
+    lastname: yup.string().min(3).required(),
+    phone: yup.number().min(11).max(15).required(),
+    email: yup.string().min(5).email().required(),
+    password: yup.string().min(6).required(),
+})
 
 export function SignUp({ navigation }) {
     const { setUserUID, setPreloader } = useContext(AppContext);
@@ -25,9 +31,13 @@ export function SignUp({ navigation }) {
                             .then(() => {
                                 navigation.navigate("Homescreen")
                             })
-                            .catch(e => console.log(e))
+                            .catch(e => {
+                                console.log(e);
+                                Alert.alert("Error!", errorMessage(e.code))
+                            })
 
                     }}
+                    validationSchema={validation}
                 >
                     {(prop) => {
                         return (
@@ -43,7 +53,7 @@ export function SignUp({ navigation }) {
                                         autoCorrect={false}
                                         onChangeText={prop.handleChange("firstname")}
                                     />
-                                    {/* <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.email && prop.errors.email}</Text> */}
+                                    <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.firstname && prop.errors.firstname}</Text>
                                 </View>
                                 <View style={styles.label}>
                                     <Text style={{ fontFamily: Theme.fonts.text500 }}>Last name:</Text>
@@ -54,7 +64,7 @@ export function SignUp({ navigation }) {
                                         autoCorrect={false}
                                         onChangeText={prop.handleChange("lastname")}
                                     />
-                                    {/* <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.email && prop.errors.email}</Text> */}
+                                    <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.lastname && prop.errors.lastname}</Text>
                                 </View>
                                 <View style={styles.label}>
                                     <Text style={{ fontFamily: Theme.fonts.text500 }}>Phone number:</Text>
@@ -65,7 +75,7 @@ export function SignUp({ navigation }) {
                                         autoCorrect={false}
                                         onChangeText={prop.handleChange("phone")}
                                     />
-                                    {/* <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.email && prop.errors.email}</Text> */}
+                                    <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.phone && prop.errors.phone}</Text>
                                 </View>
                                 <View style={styles.label}>
                                     <Text style={{ fontFamily: Theme.fonts.text500 }}>Email:</Text>
@@ -76,7 +86,7 @@ export function SignUp({ navigation }) {
                                         autoCorrect={false}
                                         onChangeText={prop.handleChange("email")}
                                     />
-                                    {/* <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.email && prop.errors.email}</Text> */}
+                                    <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.email && prop.errors.email}</Text>
                                 </View>
                                 <View>
                                     <Text style={{ fontFamily: Theme.fonts.text500 }}>Password :</Text>
@@ -90,7 +100,7 @@ export function SignUp({ navigation }) {
                                         keyboardType='default'
                                         onChangeText={prop.handleChange("password")}
                                     />
-                                    {/* <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.password && prop.errors.password}</Text> */}
+                                    <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.password && prop.errors.password}</Text>
                                 </View>
                                 <Button mode='text' style={{ fontSize: 12, alignSelf: "flex-end" }} onPress={() => { navigation.navigate("ForgotPassword") }}>Forgot Password?</Button>
 
