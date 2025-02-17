@@ -24,12 +24,15 @@ export function SignIn({ navigation }) {
                 <Formik
                     initialValues={{ email: "", password: "" }}
                     onSubmit={(value) => {
+                        setPreloader(true)
                         signInWithEmailAndPassword(auth, value.email, value.password)
                             .then((data) => {
                                 setUserUID(data.user.uid);
-                                navigation.navigate("Homescreen")
+                                // navigation.navigate("Homescreen")
+                                setPreloader(false)
                             })
                             .catch(e => {
+                                setPreloader(false)
                                 console.log(e);
                                 Alert.alert("Error!", errorMessage(e.code))
                             })

@@ -37,7 +37,11 @@ export function SignUp({ navigation }) {
                                     lastname: value.lastname,
                                     phone: value.phone,
                                     email: value.email,
+                                    userUID: uid,
+                                    balance: 0,
+                                    createAt: new Date().getTime()
                                 }).then(() => {
+                                    setUserUID(uid)
                                     navigation.navigate("Homescreen")
                                 }).catch(e => {
                                     console.log(e);
