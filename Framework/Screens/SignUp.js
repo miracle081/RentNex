@@ -7,13 +7,14 @@ import * as yup from "yup"
 import { AppContext } from '../Components/globalVariables';
 import { AppButton } from '../Components/AppButton';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../Firebase/settings';
+import { auth, db } from '../Firebase/settings';
 import { errorMessage } from '../Components/formatErrorMessage';
+import { doc, setDoc } from 'firebase/firestore';
 
 const validation = yup.object({
     firstname: yup.string().min(3).required(),
     lastname: yup.string().min(3).required(),
-    phone: yup.number().min(11).max(15).required(),
+    phone: yup.number().min(11).required(),
     email: yup.string().min(5).email().required(),
     password: yup.string().min(6).required(),
 })
@@ -28,8 +29,20 @@ export function SignUp({ navigation }) {
                     initialValues={{ firstname: "", lastname: "", phone: "", email: "", password: "" }}
                     onSubmit={(value) => {
                         createUserWithEmailAndPassword(auth, value.email, value.password)
-                            .then(() => {
-                                navigation.navigate("Homescreen")
+                            .then((data) => {
+                                const { uid } = data.user
+
+                                setDoc(doc(db, "users", uid), {
+                                    firstname: value.firstname,
+                                    lastname: value.lastname,
+                                    phone: value.phone,
+                                    email: value.email,
+                                }).then(() => {
+                                    navigation.navigate("Homescreen")
+                                }).catch(e => {
+                                    console.log(e);
+                                    Alert.alert("Error!", errorMessage(e.code))
+                                })
                             })
                             .catch(e => {
                                 console.log(e);

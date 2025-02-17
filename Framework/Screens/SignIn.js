@@ -13,7 +13,10 @@ import { auth } from '../Firebase/settings';
 import { errorMessage } from '../Components/formatErrorMessage';
 
 export function SignIn({ navigation }) {
-    const { setUserUID, setPreloader } = useContext(AppContext);
+    const { setUserUID, userUID, setPreloader } = useContext(AppContext);
+
+    // console.log(userUID);
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -22,7 +25,8 @@ export function SignIn({ navigation }) {
                     initialValues={{ email: "", password: "" }}
                     onSubmit={(value) => {
                         signInWithEmailAndPassword(auth, value.email, value.password)
-                            .then(() => {
+                            .then((data) => {
+                                setUserUID(data.user.uid);
                                 navigation.navigate("Homescreen")
                             })
                             .catch(e => {

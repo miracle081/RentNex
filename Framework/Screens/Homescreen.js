@@ -1,11 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Profile } from './Profile';
 import { Ionicons } from '@expo/vector-icons';
 import { Theme } from '../Components/Theme';
+import { AppContext } from '../Components/globalVariables';
 
 function Home({ navigation }) {
+  const { userUID, setPreloader } = useContext(AppContext);
+
+  console.log(userUID);
+
+
   return (
     <View>
       <Text>Homescreen</Text>
