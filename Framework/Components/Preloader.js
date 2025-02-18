@@ -12,13 +12,6 @@ export function Preloader() {
                 preloader ?
                     <View style={[StyleSheet.absoluteFillObject, styles.container]}>
                         <ActivityIndicator color={Theme.colors.primary} size={"large"} />
-                        {/* <AnimatedLottieView
-                            style={{ width: 400, height: 400 }}
-                            source={require('../../assets/loader.json')}
-                            autoPlay
-                            loop
-                            speed={1}
-                        /> */}
                     </View>
                     : null
             }

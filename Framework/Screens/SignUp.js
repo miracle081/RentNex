@@ -28,6 +28,7 @@ export function SignUp({ navigation }) {
                 <Formik
                     initialValues={{ firstname: "", lastname: "", phone: "", email: "", password: "" }}
                     onSubmit={(value) => {
+                        setPreloader(true)
                         createUserWithEmailAndPassword(auth, value.email, value.password)
                             .then((data) => {
                                 const { uid } = data.user
@@ -41,9 +42,11 @@ export function SignUp({ navigation }) {
                                     balance: 0,
                                     createAt: new Date().getTime()
                                 }).then(() => {
+                                    setPreloader(false)
                                     setUserUID(uid)
                                     navigation.navigate("Homescreen")
                                 }).catch(e => {
+                                    setPreloader(false)
                                     console.log(e);
                                     Alert.alert("Error!", errorMessage(e.code))
                                 })

@@ -28,8 +28,8 @@ export function SignIn({ navigation }) {
                         signInWithEmailAndPassword(auth, value.email, value.password)
                             .then((data) => {
                                 setUserUID(data.user.uid);
-                                // navigation.navigate("Homescreen")
                                 setPreloader(false)
+                                navigation.navigate("Homescreen")
                             })
                             .catch(e => {
                                 setPreloader(false)
