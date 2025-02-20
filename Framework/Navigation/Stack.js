@@ -6,6 +6,8 @@ import { Profile } from "../Screens/Profile"
 import { NavigationContainer } from "@react-navigation/native"
 import { EditProfile } from "../Screens/EditProfile"
 import { SignUp } from "../Screens/SignUp"
+import { FundAccount } from "../Screens/FundAccount"
+import { Pay } from "../Screens/Pay"
 
 const Stack = createNativeStackNavigator()
 
@@ -19,6 +21,8 @@ export function StackNavigator() {
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="EditProfile" component={EditProfile} />
                 <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen name="FundAccount" component={FundAccount} />
+                <Stack.Screen name="Pay" component={Pay} />
             </Stack.Navigator>
         </NavigationContainer>
     )

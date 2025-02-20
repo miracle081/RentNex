@@ -9,7 +9,7 @@ import { AppContext } from '../Components/globalVariables';
 import Carousel from 'react-native-reanimated-carousel';
 import { faAngleRight, faArrowRight, faBell, faBriefcase, faHeadset, faLocationDot, faMagnifyingGlass, faMagnifyingGlassPlus } from "@fortawesome/free-solid-svg-icons";
 import { formatMoney } from "../Components/FormatMoney";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../Firebase/settings";
 import { Assets } from "./Assets";
 import { PostAsset } from "./PostAsset";
@@ -24,7 +24,7 @@ const carouselLinks = [
 
 function Home({ navigation }) {
   const screenWidth = Dimensions.get("screen").width
-  const { userUID, userInfo, setPreloader, setDoc, allAssts, setAllAssts } = useContext(AppContext)
+  const { userUID, userInfo, setUserInfo, setPreloader, setDoc, allAssts, setAllAssts } = useContext(AppContext)
 
 
   function getAssets() {
@@ -37,8 +37,19 @@ function Home({ navigation }) {
     })
   }
 
+  function getUser() {
+    // getDoc(doc(db, "users", userUID))
+    //   .then(res => {
+    //     // setUserInfo(res.data());
+    //   })
+    onSnapshot(doc(db, "users", userUID), user => {
+      setUserInfo(user.data());
+    })
+  };
+
   useEffect(() => {
-    getAssets()
+    getAssets();
+    getUser()
   }, [])
 
 
@@ -48,7 +59,7 @@ function Home({ navigation }) {
       <View style={styles.constainer}>
         <View style={[styles.topBar, { marginBottom: 10 }]}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-            <Image source={require("../../assets/icon.png")} style={styles.dp} />
+            <Image source={require("../../assets/user.png")} style={styles.dp} />
             <View style={{ gap: 0 }}>
               <Text style={{ fontSize: 12, fontFamily: Theme.fonts.text400 }}> Welcome!</Text>
               <Text style={{ fontSize: 18, fontFamily: Theme.fonts.text600 }}>{userInfo.firstname} {userInfo.lastname}</Text>

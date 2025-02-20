@@ -44,7 +44,7 @@ export function SignUp({ navigation }) {
                                 }).then(() => {
                                     setPreloader(false)
                                     setUserUID(uid)
-                                    navigation.navigate("Homescreen")
+                                    navigation.replace("Homescreen")
                                 }).catch(e => {
                                     setPreloader(false)
                                     console.log(e);
