@@ -9,10 +9,12 @@ import { AppContext } from '../Components/globalVariables';
 import Carousel from 'react-native-reanimated-carousel';
 import { faAngleRight, faArrowRight, faBell, faBriefcase, faHeadset, faLocationDot, faMagnifyingGlass, faMagnifyingGlassPlus } from "@fortawesome/free-solid-svg-icons";
 import { formatMoney } from "../Components/FormatMoney";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../Firebase/settings";
 import { StatusBar } from "expo-status-bar";
 import { Searchbar } from "react-native-paper";
+import { ToastApp } from "../Components/Toast";
+import { errorMessage } from "../Components/formatErrorMessage";
 
 
 export function Posts({ navigation }) {
@@ -49,6 +51,21 @@ export function Posts({ navigation }) {
                 item.location.toLowerCase().includes(input.toLowerCase())
         })
         setSearchedData(newData);
+    }
+
+    function deletePost(docID) {
+        setPreloader(true)
+        deleteDoc(doc(db, "assets", docID))
+            .then(() => {
+                setPreloader(false)
+                ToastApp("Asset updated!")
+            })
+            .catch(e => {
+                setPreloader(false)
+                console.log(e);
+                Alert.alert("Error!", errorMessage(e.code))
+            })
+
     }
 
     return (
@@ -91,7 +108,7 @@ export function Posts({ navigation }) {
                                                 <Ionicons name="document-text-outline" size={20} color="white" />
                                                 <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: "white" }}>Edit</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => { setDoc(item); }}
+                                            <TouchableOpacity onPress={() => { deletePost(item.docID); }}
                                                 style={{ backgroundColor: Theme.colors.red, padding: 5, borderRadius: 100, width: 150, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                                 <Ionicons name="trash" size={20} color="white" />
                                                 <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: "white" }}>Delete</Text>
