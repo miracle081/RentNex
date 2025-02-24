@@ -5,20 +5,21 @@ import { Theme } from '../Components/Theme';
 import * as Imagepicker from "expo-image-picker"
 import { AppContext } from '../Components/globalVariables';
 import { AppButton } from '../Components/AppButton';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, doc as FBdoc, updateDoc } from 'firebase/firestore';
 import { errorMessage } from '../Components/formatErrorMessage';
 import { db } from '../Firebase/settings';
+import { ToastApp } from '../Components/Toast';
 
 
-export function PostAsset({ navigation }) {
-    const { setPreloader, userUID, } = useContext(AppContext);
+export function EditPost({ navigation }) {
+    const { setPreloader, userUID, doc } = useContext(AppContext);
 
-    const [image, setimage] = useState(null);
-    const [phone, setphone] = useState("");
-    const [assetname, setAssetname] = useState("");
-    const [location, setLocation] = useState("");
-    const [amount, setAmount] = useState(0);
-    const [description, setDescription] = useState("");
+    const [image, setimage] = useState(doc.image || null);
+    const [phone, setphone] = useState(doc.phone);
+    const [assetname, setAssetname] = useState(doc.name);
+    const [location, setLocation] = useState(doc.location);
+    const [amount, setAmount] = useState(doc.amount);
+    const [description, setDescription] = useState(doc.description);
 
 
     useEffect(() => {
@@ -41,22 +42,17 @@ export function PostAsset({ navigation }) {
     }
 
     function makeAPost() {
-        if (!image || !assetname || !description || !location || !phone || !phone) {
-            Alert.alert("Incomplete inputs", "Please provide a image, Corporate name,Short name, Incorporation number, Office Address, email,  phone number.");
-            return;
-        }
         setPreloader(true);
-        addDoc(collection(db, "assets"), {
+        updateDoc(FBdoc(db, "assets", doc.docID), {
             name: assetname,
             location,
             phone,
             description,
             amount,
             image,
-            userUID,
-            createAt: new Date().getTime()
         }).then(() => {
             setPreloader(false)
+            ToastApp("Asset updated!")
             navigation.goBack()
         }).catch(e => {
             setPreloader(false)
@@ -85,6 +81,7 @@ export function PostAsset({ navigation }) {
                                 autoCapitalize='words'
                                 mode='outlined'
                                 onChangeText={(text) => setAssetname(text.trim())}
+                                value={assetname}
                             />
 
 
@@ -95,6 +92,7 @@ export function PostAsset({ navigation }) {
                                 autoCapitalize='words'
                                 mode='outlined'
                                 onChangeText={(text) => setLocation(text.trim())}
+                                value={location}
                             />
 
                             <Text style={[styles.label, { marginTop: 10 }]}>Amount</Text>
@@ -103,6 +101,7 @@ export function PostAsset({ navigation }) {
                                 keyboardType='number-pad'
                                 mode='outlined'
                                 onChangeText={(text) => setAmount(text.trim())}
+                                value={amount}
                             />
 
                             {/* <Text style={[styles.label, { marginTop: 10 }]}>Company Email Address</Text>
@@ -120,6 +119,7 @@ export function PostAsset({ navigation }) {
                                 keyboardType='default'
                                 mode='outlined'
                                 onChangeText={inp => setphone(inp.trim())}
+                                value={phone}
                             />
                             <Text style={[styles.label, { marginTop: 10 }]}>Description</Text>
                             <TextInput
@@ -129,6 +129,7 @@ export function PostAsset({ navigation }) {
                                 onChangeText={inp => setDescription(inp.trim())}
                                 multiline
                                 numberOfLines={5}
+                                value={description}
                             />
 
                             {image ?
@@ -141,7 +142,7 @@ export function PostAsset({ navigation }) {
 
 
                             <View style={{ marginTop: 10, }}>
-                                <AppButton onPress={makeAPost}>Post</AppButton>
+                                <AppButton onPress={makeAPost}>Edit Post</AppButton>
                             </View>
                         </View>
                     </ScrollView>

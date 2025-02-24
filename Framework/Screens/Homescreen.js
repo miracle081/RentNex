@@ -31,7 +31,7 @@ function Home({ navigation }) {
     onSnapshot(collection(db, "assets"), (snapShot) => {
       const all = []
       snapShot.forEach(item => {
-        all.push(item.data())
+        all.push({ ...item.data(), docID: item.id })
       });
       setAllAssts(all)
     })
@@ -110,7 +110,7 @@ function Home({ navigation }) {
           </View>
 
           <FlatList
-            showsHorizontalScrollIndicator={false} data={allAssts} style={{ flex: 1, paddingBottom: 10 }}
+            showsHorizontalScrollIndicator={false} data={allAssts.slice(0, 3).sort((a, b) => b.createAt - a.createAt)} style={{ flex: 1, paddingBottom: 10 }}
             renderItem={({ item, index }) => {
               // console.log(item);
               return (

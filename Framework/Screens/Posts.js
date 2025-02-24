@@ -9,25 +9,30 @@ import { AppContext } from '../Components/globalVariables';
 import Carousel from 'react-native-reanimated-carousel';
 import { faAngleRight, faArrowRight, faBell, faBriefcase, faHeadset, faLocationDot, faMagnifyingGlass, faMagnifyingGlassPlus } from "@fortawesome/free-solid-svg-icons";
 import { formatMoney } from "../Components/FormatMoney";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../Firebase/settings";
 import { StatusBar } from "expo-status-bar";
 import { Searchbar } from "react-native-paper";
 
 
-export function Assets({ navigation }) {
+export function Posts({ navigation }) {
     const screenWidth = Dimensions.get("screen").width
-    const { userUID, userInfo, setPreloader, setDoc, allAssts, setAllAssts } = useContext(AppContext)
+    const { userUID, userInfo, setPreloader, setDoc, } = useContext(AppContext)
+    const [postData, setPostData] = useState([]);
     const [searchedData, setSearchedData] = useState([]);
 
 
     function getAssets() {
-        onSnapshot(collection(db, "assets"), (snapShot) => {
+        const q = collection(db, "assets")
+
+        onSnapshot(query(q, where("userUID", "==", userUID)), (snapShot) => {
             const all = []
             snapShot.forEach(item => {
                 all.push({ ...item.data(), docID: item.id })
             });
-            setAllAssts(all)
+            setPostData(all)
+            console.log(all);
+
         })
     }
 
@@ -35,20 +40,19 @@ export function Assets({ navigation }) {
         getAssets()
     }, [])
 
-    useEffect(() => setSearchedData(allAssts), [allAssts]);
+    useEffect(() => setSearchedData(postData), [postData]);
 
 
     function handleSearch(input) {
-        const newData = allAssts.filter(item => {
+        const newData = postData.filter(item => {
             return item.name.toLowerCase().includes(input.toLowerCase()) ||
                 item.location.toLowerCase().includes(input.toLowerCase())
         })
         setSearchedData(newData);
     }
 
-
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "white", paddingTop: StatusBar.currentHeight }}>
+        <View style={{ flex: 1, backgroundColor: "white", paddingTop: StatusBar.currentHeight }}>
 
             <View style={styles.constainer}>
                 <View style={[styles.topBar, { marginBottom: 10, }]}>
@@ -64,7 +68,7 @@ export function Assets({ navigation }) {
                     {searchedData.length > 0 ?
                         <FlatList
                             showsHorizontalScrollIndicator={false}
-                            data={searchedData} contentContainerStyle={{ paddingBottom: 10, gap: 10 }}
+                            data={searchedData} contentContainerStyle={{ paddingBottom: 10, gap: 10, }}
                             renderItem={({ item, index }) => {
                                 // console.log(item);
                                 return (
@@ -81,11 +85,16 @@ export function Assets({ navigation }) {
                                         <View style={{ backgroundColor: "#00000008", padding: 5, borderRadius: 5 }}>
                                             <Text numberOfLines={2} style={{ fontSize: 15, fontFamily: Theme.fonts.text500, color: Theme.colors.text }}>{item.description}</Text>
                                         </View>
-                                        <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: 6 }}>
-                                            <TouchableOpacity onPress={() => { setDoc(item); navigation.navigate("AssetDetails"); }}
-                                                style={{ backgroundColor: Theme.colors.primary, padding: 5, borderRadius: 100, width: 150, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                                <Ionicons name="cart-outline" size={20} color="white" />
-                                                <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: "white" }}>Rent now</Text>
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 6 }}>
+                                            <TouchableOpacity onPress={() => { setDoc(item); navigation.navigate("EditPost"); }}
+                                                style={{ backgroundColor: Theme.colors.blueMedium, padding: 5, borderRadius: 100, width: 150, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                                <Ionicons name="document-text-outline" size={20} color="white" />
+                                                <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: "white" }}>Edit</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={() => { setDoc(item); }}
+                                                style={{ backgroundColor: Theme.colors.red, padding: 5, borderRadius: 100, width: 150, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                                <Ionicons name="trash" size={20} color="white" />
+                                                <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: "white" }}>Delete</Text>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -102,7 +111,7 @@ export function Assets({ navigation }) {
                     }
                 </View>
             </View>
-        </SafeAreaView >
+        </View >
     )
 }
 
