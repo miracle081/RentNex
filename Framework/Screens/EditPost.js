@@ -90,8 +90,6 @@ export function EditPost({ navigation }) {
                     <ScrollView style={{ flex: 1 }}>
                         <View style={styles.formContainer}>
 
-                            <Text style={[styles.header, { marginTop: 10 }]}>Edit Post</Text>
-
                             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 6 }}>
                                 <Text style={{ color: Theme.colors[doc.status == "Rented" ? "red" : "primary"] }}>{doc.status}</Text>
                                 <TouchableOpacity onPress={closeModal}
@@ -99,6 +97,8 @@ export function EditPost({ navigation }) {
                                     <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: "white" }}>Change Status</Text>
                                 </TouchableOpacity>
                             </View>
+                            <Text style={{ color: "gray", marginVertical: 10 }}>Date Posted: {new Date(doc.createAt).toLocaleString()}</Text>
+
                             <Text style={[styles.label, { marginTop: 10 }]}>Name</Text>
                             <TextInput
                                 style={styles.inputStyle}

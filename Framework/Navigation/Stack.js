@@ -26,7 +26,7 @@ export function StackNavigator() {
                 <Stack.Screen name="FundAccount" component={FundAccount} />
                 <Stack.Screen name="Pay" component={Pay} />
                 <Stack.Screen name="Posts" component={Posts} />
-                <Stack.Screen name="EditPost" component={EditPost} />
+                <Stack.Screen name="EditPost" component={EditPost} options={{ title: "Edit Post" }} />
             </Stack.Navigator>
         </NavigationContainer>
     )

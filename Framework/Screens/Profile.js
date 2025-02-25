@@ -33,8 +33,8 @@ export function Profile({ navigation }) {
                 <View style={styles.container}>
                     <View style={{ alignItems: "center", }}>
                         <Image style={{ width: 120, height: 120, borderRadius: 200 }}
-                            source={{ uri: userInfo.image }}
-                            defaultSource={require("../../assets/user.png")} />
+                            source={userInfo.image ? { uri: userInfo.image } : require("../../assets/user.png")}
+                        />
                         <Text style={{ fontSize: 22, fontFamily: Theme.fonts.text700 }}>{userInfo.firstname} {userInfo.lastname}</Text>
                         <Text style={{ fontSize: 15, fontFamily: Theme.fonts.text400, color: Theme.colors.light.text2 }}>{userInfo.email}</Text>
                         <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}
