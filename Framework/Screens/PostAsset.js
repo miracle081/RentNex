@@ -54,7 +54,8 @@ export function PostAsset({ navigation }) {
             amount,
             image,
             userUID,
-            createAt: new Date().getTime()
+            createAt: new Date().getTime(),
+            statu: "Available"
         }).then(() => {
             setPreloader(false)
             navigation.goBack()
@@ -73,7 +74,7 @@ export function PostAsset({ navigation }) {
                     <ScrollView style={{ flex: 1 }}>
                         <View style={styles.formContainer}>
 
-                            <Text style={[styles.header, { marginTop: 10 }]}>Company Verification</Text>
+                            <Text style={[styles.header, { marginTop: 10 }]}>Post an Asset</Text>
                             <Text style={styles.text}>
                                 Please ensure that all information provided is accurate and up-to-date. Once submitted, our team will review your application promptly.
                             </Text>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
-import { Text, View, TextInput, Alert, TouchableOpacity, Image, Pressable, ScrollView, StyleSheet, Dimensions, FlatList, StatusBar, SafeAreaView, KeyboardAvoidingView, Platform, } from "react-native";
+import { Text, View, TextInput, Alert, TouchableOpacity, Image, Pressable, ScrollView, StyleSheet, Dimensions, FlatList, StatusBar, SafeAreaView, KeyboardAvoidingView, Platform, Modal, } from "react-native";
 import { Theme } from '../Components/Theme';
 import * as Imagepicker from "expo-image-picker"
 import { AppContext } from '../Components/globalVariables';
@@ -9,6 +9,9 @@ import { addDoc, doc as FBdoc, updateDoc } from 'firebase/firestore';
 import { errorMessage } from '../Components/formatErrorMessage';
 import { db } from '../Firebase/settings';
 import { ToastApp } from '../Components/Toast';
+import { Ionicons } from '@expo/vector-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 
 export function EditPost({ navigation }) {
@@ -20,7 +23,11 @@ export function EditPost({ navigation }) {
     const [location, setLocation] = useState(doc.location);
     const [amount, setAmount] = useState(doc.amount);
     const [description, setDescription] = useState(doc.description);
+    const [modalVisibility, setModalVisibility] = useState(false);
 
+    const closeModal = () => {
+        setModalVisibility(!modalVisibility);
+    };
 
     useEffect(() => {
         // setPreloader(false);
@@ -62,6 +69,20 @@ export function EditPost({ navigation }) {
 
     }
 
+    function updateStatus(item) {
+        setPreloader(true);
+        updateDoc(FBdoc(db, "assets", doc.docID), {
+            status: item
+        }).then(() => {
+            setPreloader(false)
+            ToastApp("Status updated!")
+        }).catch(e => {
+            setPreloader(false)
+            console.log(e);
+            Alert.alert("Error!", errorMessage(e.code))
+        })
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "height" : null} style={{ flex: 1 }}>
@@ -69,11 +90,15 @@ export function EditPost({ navigation }) {
                     <ScrollView style={{ flex: 1 }}>
                         <View style={styles.formContainer}>
 
-                            <Text style={[styles.header, { marginTop: 10 }]}>Company Verification</Text>
-                            <Text style={styles.text}>
-                                Please ensure that all information provided is accurate and up-to-date. Once submitted, our team will review your application promptly.
-                            </Text>
+                            <Text style={[styles.header, { marginTop: 10 }]}>Edit Post</Text>
 
+                            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 6 }}>
+                                <Text style={{ color: Theme.colors[doc.status == "Rented" ? "red" : "primary"] }}>{doc.status}</Text>
+                                <TouchableOpacity onPress={closeModal}
+                                    style={{ backgroundColor: Theme.colors.blueMedium, padding: 5, borderRadius: 100, width: 150, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: "white" }}>Change Status</Text>
+                                </TouchableOpacity>
+                            </View>
                             <Text style={[styles.label, { marginTop: 10 }]}>Name</Text>
                             <TextInput
                                 style={styles.inputStyle}
@@ -147,6 +172,40 @@ export function EditPost({ navigation }) {
                         </View>
                     </ScrollView>
                 </View>
+
+                <Modal
+                    visible={modalVisibility}
+                    animationType="slide"
+                    transparent={true}
+                >
+                    <View style={{ flex: 1, backgroundColor: "#000000cc" }}>
+                        <Pressable style={{ flex: 1 }} onPress={closeModal} >
+                        </Pressable>
+                        <View style={{ height: 240, backgroundColor: Theme.colors.light.bg, borderTopRightRadius: 20, borderTopLeftRadius: 20 }}>
+                            <View style={{ alignItems: 'flex-end', margin: 10 }}>
+                                <TouchableOpacity onPress={closeModal}>
+                                    <FontAwesomeIcon
+                                        icon={faXmark}
+                                        size={24}
+                                        color={Theme.colors.light.text2}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+
+                                <View style={{ alignItems: 'center', marginBottom: 10 }}>
+                                    <Text style={{ fontSize: 19, fontFamily: Theme.fonts.text600 }}>Change asset status</Text>
+                                </View>
+
+                                <View style={{ marginTop: 20, margin: 15, gap: 10 }}>
+                                    <AppButton onPress={() => { closeModal(); updateStatus("Available") }} >Available</AppButton>
+                                    <AppButton onPress={() => { closeModal(); updateStatus("Rented") }} style={{ borderColor: Theme.colors.red, backgroundColor: "transparent", borderWidth: 1 }} textColor={Theme.colors.red}>Rented</AppButton>
+                                </View>
+
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
             </KeyboardAvoidingView>
         </SafeAreaView >
     )

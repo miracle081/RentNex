@@ -59,7 +59,8 @@ function Home({ navigation }) {
       <View style={styles.constainer}>
         <View style={[styles.topBar, { marginBottom: 10 }]}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-            <Image source={require("../../assets/user.png")} style={styles.dp} />
+            <Image source={{ uri: userInfo.image }}
+              defaultSource={require("../../assets/user.png")} style={styles.dp} />
             <View style={{ gap: 0 }}>
               <Text style={{ fontSize: 12, fontFamily: Theme.fonts.text400 }}> Welcome!</Text>
               <Text style={{ fontSize: 18, fontFamily: Theme.fonts.text600 }}>{userInfo.firstname} {userInfo.lastname}</Text>
@@ -127,7 +128,9 @@ function Home({ navigation }) {
                   <View style={{ backgroundColor: "#00000008", padding: 5, borderRadius: 5 }}>
                     <Text numberOfLines={2} style={{ fontSize: 15, fontFamily: Theme.fonts.text500, color: Theme.colors.text }}>{item.description}</Text>
                   </View>
-                  <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: 6 }}>
+                  <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 6 }}>
+                    <Text style={{ color: Theme.colors[item.status == "Rented" ? "red" : "primary"], fontSize: 16, fontFamily: Theme.fonts.text500 }}>{item.status}</Text>
+
                     <TouchableOpacity onPress={() => { setDoc(item); navigation.navigate("AssetDetails"); }}
                       style={{ backgroundColor: Theme.colors.primary, padding: 5, borderRadius: 100, width: 150, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                       <Ionicons name="cart-outline" size={20} color="white" />
@@ -210,7 +213,7 @@ export function Homescreen() {
     >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Assets" component={Assets} />
-      <Tab.Screen name="PostAsset" component={PostAsset} />
+      <Tab.Screen name="PostAsset" component={PostAsset} options={{ title: "Post Asset" }} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );

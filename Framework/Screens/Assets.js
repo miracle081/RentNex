@@ -81,7 +81,8 @@ export function Assets({ navigation }) {
                                         <View style={{ backgroundColor: "#00000008", padding: 5, borderRadius: 5 }}>
                                             <Text numberOfLines={2} style={{ fontSize: 15, fontFamily: Theme.fonts.text500, color: Theme.colors.text }}>{item.description}</Text>
                                         </View>
-                                        <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: 6 }}>
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 6 }}>
+                                            <Text style={{ color: Theme.colors[item.status == "Rented" ? "red" : "primary"], fontSize: 16, fontFamily: Theme.fonts.text500 }}>{item.status}</Text>
                                             <TouchableOpacity onPress={() => { setDoc(item); navigation.navigate("AssetDetails"); }}
                                                 style={{ backgroundColor: Theme.colors.primary, padding: 5, borderRadius: 100, width: 150, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                                 <Ionicons name="cart-outline" size={20} color="white" />

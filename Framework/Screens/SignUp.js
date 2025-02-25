@@ -39,8 +39,9 @@ export function SignUp({ navigation }) {
                                     phone: value.phone,
                                     email: value.email,
                                     userUID: uid,
+                                    image: null,
                                     balance: 0,
-                                    createAt: new Date().getTime()
+                                    createAt: new Date().getTime(),
                                 }).then(() => {
                                     setPreloader(false)
                                     setUserUID(uid)

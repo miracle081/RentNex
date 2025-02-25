@@ -33,8 +33,6 @@ export function Posts({ navigation }) {
                 all.push({ ...item.data(), docID: item.id })
             });
             setPostData(all)
-            console.log(all);
-
         })
     }
 
@@ -58,7 +56,7 @@ export function Posts({ navigation }) {
         deleteDoc(doc(db, "assets", docID))
             .then(() => {
                 setPreloader(false)
-                ToastApp("Asset updated!")
+                ToastApp("Asset Deleted!")
             })
             .catch(e => {
                 setPreloader(false)
@@ -99,16 +97,15 @@ export function Posts({ navigation }) {
                                             </View>
                                             <Text style={{ fontSize: 18, color: Theme.colors.green }}>₦{formatMoney(item.amount)}</Text>
                                         </View>
-                                        <View style={{ backgroundColor: "#00000008", padding: 5, borderRadius: 5 }}>
-                                            <Text numberOfLines={2} style={{ fontSize: 15, fontFamily: Theme.fonts.text500, color: Theme.colors.text }}>{item.description}</Text>
-                                        </View>
+                                        <Text style={{ color: Theme.colors[item.status == "Rented" ? "red" : "primary"] }}>{item.status}</Text>
+
                                         <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 6 }}>
                                             <TouchableOpacity onPress={() => { setDoc(item); navigation.navigate("EditPost"); }}
                                                 style={{ backgroundColor: Theme.colors.blueMedium, padding: 5, borderRadius: 100, width: 150, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                                 <Ionicons name="document-text-outline" size={20} color="white" />
                                                 <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: "white" }}>Edit</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => { deletePost(item.docID); }}
+                                            <TouchableOpacity onPress={() => { Alert.alert("Delete Post", "Are you sure you want to delete this post?", [{ text: "Yes", onPress: () => deletePost(item.docID), style: "destructive" }, { text: "No" }]) }}
                                                 style={{ backgroundColor: Theme.colors.red, padding: 5, borderRadius: 100, width: 150, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                                 <Ionicons name="trash" size={20} color="white" />
                                                 <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: "white" }}>Delete</Text>

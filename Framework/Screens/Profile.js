@@ -31,20 +31,18 @@ export function Profile({ navigation }) {
                 <RefreshControl refreshing={false} onRefresh={refreshControl} />
             } showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
-                    <View style={{ flexDirection: "row", gap: 10 }}>
-                        <Image style={{ width: 70, height: 70, borderRadius: 50 }}
+                    <View style={{ alignItems: "center", }}>
+                        <Image style={{ width: 120, height: 120, borderRadius: 200 }}
                             source={{ uri: userInfo.image }}
                             defaultSource={require("../../assets/user.png")} />
+                        <Text style={{ fontSize: 22, fontFamily: Theme.fonts.text700 }}>{userInfo.firstname} {userInfo.lastname}</Text>
+                        <Text style={{ fontSize: 15, fontFamily: Theme.fonts.text400, color: Theme.colors.light.text2 }}>{userInfo.email}</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}
+                            style={{ borderColor: Theme.colors.primary, borderWidth: 1, padding: 5, paddingHorizontal: 10, borderRadius: 100, width: 130, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+                            <FontAwesomeIcon icon={faUserCircle} color={Theme.colors.primary} />
+                            <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: Theme.colors.primary }}>Edit Profile</Text>
+                        </TouchableOpacity>
 
-                        <View style={{ marginBottom: 10, }}>
-                            <Text style={{ fontSize: 22, fontFamily: Theme.fonts.text700 }}>{userInfo.firstname} {userInfo.lastname}</Text>
-                            <Text style={{ fontSize: 15, fontFamily: Theme.fonts.text400, color: Theme.colors.light.text2 }}>{userInfo.email}</Text>
-                            <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}
-                                style={{ borderColor: Theme.colors.primary, borderWidth: 1, padding: 5, paddingHorizontal: 10, borderRadius: 100, width: 130, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
-                                <FontAwesomeIcon icon={faUserCircle} color={Theme.colors.primary} />
-                                <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: Theme.colors.primary }}>Edit Profile</Text>
-                            </TouchableOpacity>
-                        </View>
                     </View>
                     <View style={{ marginTop: 20, borderColor: Theme.colors.light.line, borderWidth: 1, borderRadius: 10, padding: 10 }}>
                         <View style={{ justifyContent: "space-between", flexDirection: "row", alignItems: "center" }}>
@@ -72,29 +70,6 @@ export function Profile({ navigation }) {
                             <FontAwesomeIcon icon={faAngleRight} size={20} color={Theme.colors.light.text2} />
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.ProfileBtn}>
-                            <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <AntDesign name="idcard" size={24} style={{ paddingRight: 10, color: Theme.colors.light.text2 }} />
-                                <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 16 }}>Account Verification</Text>
-                            </View>
-                            <FontAwesomeIcon icon={faAngleRight} size={20} color={Theme.colors.light.text2} />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.ProfileBtn}>
-                            <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <Ionicons name="gift-outline" size={24} style={{ paddingRight: 10, color: Theme.colors.light.text2 }} />
-                                <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 16 }}>Referral Bonus</Text>
-                            </View>
-                            <FontAwesomeIcon icon={faAngleRight} size={20} color={Theme.colors.light.text2} />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.ProfileBtn}>
-                            <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <AntDesign name="key" size={24} style={{ paddingRight: 10, color: Theme.colors.light.text2 }} />
-                                <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 16 }}>Transaction Pin</Text>
-                            </View>
-                            <FontAwesomeIcon icon={faAngleRight} size={20} color={Theme.colors.light.text2} />
-                        </TouchableOpacity>
 
                         <TouchableOpacity style={styles.ProfileBtn}>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -116,13 +91,6 @@ export function Profile({ navigation }) {
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <MaterialCommunityIcons name='format-list-text' size={24} style={{ paddingRight: 10, color: Theme.colors.light.text2 }} />
                                 <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 16 }}>Terms of Use</Text>
-                            </View>
-                            <FontAwesomeIcon icon={faAngleRight} size={20} color={Theme.colors.light.text2} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.ProfileBtn}>
-                            <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <Ionicons name='trash-outline' size={24} style={{ paddingRight: 10, color: Theme.colors.red, }} />
-                                <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 16, color: Theme.colors.red, }}>Delete Account</Text>
                             </View>
                             <FontAwesomeIcon icon={faAngleRight} size={20} color={Theme.colors.light.text2} />
                         </TouchableOpacity>
