@@ -13,7 +13,6 @@ export function AssetDetails({ navigation }) {
 
 
     const handleShow = () => setShowMore(!showMore)
-    const imgStyle = (img) => img == defaultImg ? { height: 50, width: 50, opacity: 0.5 } : { height: 60, width: 60 }
 
     const callNumber = (phone) => {
         let phoneNumber = phone;
@@ -49,12 +48,12 @@ export function AssetDetails({ navigation }) {
                         <View style={{ marginTop: 10, flexDirection: "row", justifyContent: "space-between", }}>
                             <View style={{ alignItems: "center", flexDirection: "row", }}>
                                 <AntDesign name="clockcircleo" size={14} style={{ paddingRight: 10, color: Theme.colors.primary }} />
-                                <Text style={{ fontSize: 14, lineHeight: 20, fontFamily: Theme.fonts.text500, color: Theme.colors.light.text2 }}>Status: {doc.status ? "Sold Out" : "Available"}</Text>
+                                <Text style={{ fontSize: 14, lineHeight: 20, fontFamily: Theme.fonts.text500, color: Theme.colors[doc.status == "Available" ? "green" : "red"] }}>Status: {doc.status}</Text>
                             </View>
-                            <View style={{ alignItems: "center", flexDirection: "row", }}>
-                                <Ionicons name="person-outline" size={14} style={{ paddingRight: 10, color: Theme.colors.primary }} />
-                                <Text style={{ fontSize: 14, lineHeight: 20, fontFamily: Theme.fonts.text500, color: Theme.colors.light.text2 }}>Posted: {new Date(doc.created_at).toLocaleString()}</Text>
-                            </View>
+                        </View>
+                        <View style={{ alignItems: "center", flexDirection: "row", }}>
+                            <Ionicons name="calendar" size={14} style={{ paddingRight: 10, color: Theme.colors.primary }} />
+                            <Text style={{ fontSize: 14, lineHeight: 20, fontFamily: Theme.fonts.text500, color: Theme.colors.light.text2 }}>Posted: {new Date(doc.createAt).toLocaleString()}</Text>
                         </View>
 
                     </View>
@@ -65,7 +64,7 @@ export function AssetDetails({ navigation }) {
                         <Text numberOfLines={showMore ? null : 10}
                             style={{ fontSize: 14, lineHeight: 20, fontFamily: Theme.fonts.text500, color: Theme.colors.light.text2 }}>{doc.description}</Text>
                         <TouchableOpacity style={{ alignSelf: "flex-end" }} onPress={handleShow}>
-                            <Text style={{ color: Theme.colors.primary, fontSize: 14, fontFamily: Theme.fonts.text500 }}>{showMore ? "Show Less" : "Show More"}</Text>
+                            <Text style={{ color: Theme.colors.primary, fontSize: 14, fontFamily: Theme.fonts.text500 }}>Show {showMore ? "Less" : "More"}</Text>
                         </TouchableOpacity>
 
                     </View>
