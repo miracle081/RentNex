@@ -33,6 +33,9 @@ export function PostAsset({ navigation }) {
             allowsEditing: true,
             aspect: [4, 4],
             quality: 1,
+            // quality: 5,
+            // allowsMultipleSelection: true,
+
         })
         if (!result.canceled) {
             const { uri } = result.assets[0];
@@ -133,9 +136,11 @@ export function PostAsset({ navigation }) {
                             />
 
                             {image ?
+
                                 <TouchableOpacity onPress={picker}>
                                     <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
                                 </TouchableOpacity>
+
                                 :
                                 <AppButton onPress={picker} buttonColor={"transparent"} textColor={Theme.colors.primary}>Select image</AppButton>
                             }

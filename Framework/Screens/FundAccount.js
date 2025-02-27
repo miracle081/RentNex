@@ -1,14 +1,11 @@
 import { Image, Modal, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useContext, useState } from 'react'
-import { Button } from 'react-native-paper'
+import React, {  useState } from 'react'
 import { Theme } from '../Components/Theme'
 import { Formik } from 'formik'
 import * as yup from "yup"
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { formatMoney } from '../Components/FormatMoney'
-import { AppContext } from '../Components/globalVariables'
-import { ToastApp } from '../Components/Toast'
 
 
 const validationSchema = yup.object({
@@ -16,7 +13,6 @@ const validationSchema = yup.object({
 })
 
 export function FundAccount({ navigation }) {
-    const { email, setPreloader } = useContext(AppContext)
     const [modalVisibility, setModalVisibility] = useState(false);
     const [amount, setAmount] = useState(0);
 
