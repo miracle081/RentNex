@@ -1,10 +1,9 @@
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { AppButton } from '../Components/AppButton';
 import { Theme } from '../Components/Theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-export function Intro({ navigation }) {
+export function Intro() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
