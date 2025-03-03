@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useContext } from "react";
-import { Text, View, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Dimensions, Alert, ScrollView, FlatList, RefreshControl } from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity, TextInput, Dimensions, Alert, ScrollView, FlatList, RefreshControl } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Profile } from './Profile';
@@ -13,6 +13,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../Firebase/settings";
 import { StatusBar } from "expo-status-bar";
 import { Searchbar } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 export function Assets({ navigation }) {

@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Platform, StatusBar, TouchableOpacity, Image, Modal, Pressable, ScrollView, Alert, RefreshControl, SafeAreaView } from "react-native";
+import { View, StyleSheet, Text, Platform, StatusBar, TouchableOpacity, Image, Modal, Pressable, ScrollView, Alert, RefreshControl } from "react-native";
 import { Theme } from "../Components/Theme";
 import { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -7,6 +7,7 @@ import { AntDesign, Feather, FontAwesome6, Ionicons, MaterialCommunityIcons } fr
 import { formatMoney } from "../Components/FormatMoney";
 import { AppContext } from "../Components/globalVariables";
 import { AppButton } from "../Components/AppButton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export function Profile({ navigation }) {
     const { userUID, userInfo, setPreloader } = useContext(AppContext)

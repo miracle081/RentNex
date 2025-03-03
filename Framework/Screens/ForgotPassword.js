@@ -10,12 +10,10 @@ export function ForgotPassword({ navigation, }) {
     const { setPreloader } = useContext(AppContext)
     const [email, setEmail] = useState("")
 
-
     function sendEmail() {
         setPreloader(true);
         sendPasswordResetEmail(auth, email)
-            .then((a) => {
-                console.log(a);
+            .then(() => {
                 setPreloader(false);
                 Alert.alert("Password Reset", "A password reset email has been sent to your mail.");
             })

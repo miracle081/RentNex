@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useContext } from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity, TextInput, Dimensions, Alert, ScrollView, FlatList, RefreshControl, SafeAreaView, StatusBar } from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity, TextInput, Dimensions, Alert, ScrollView, FlatList, RefreshControl, StatusBar } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Profile } from './Profile';
@@ -13,6 +13,7 @@ import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../Firebase/settings";
 import { Assets } from "./Assets";
 import { PostAsset } from "./PostAsset";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 const carouselLinks = [
@@ -43,7 +44,7 @@ function Home({ navigation }) {
     //     // setUserInfo(res.data());
     //   })
     onSnapshot(doc(db, "users", userUID), user => {
-      setUserInfo(user.data());
+      user.exists() ? setUserInfo(user.data()) : null;
     })
   };
 
@@ -53,9 +54,8 @@ function Home({ navigation }) {
   }, [])
 
 
-
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white", paddingTop: StatusBar.currentHeight }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white", marginTop: StatusBar.currentHeight }}>
       <View style={styles.constainer}>
         <View style={[styles.topBar, { marginBottom: 10 }]}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>

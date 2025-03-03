@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
-import { Text, View, TextInput, Alert, TouchableOpacity, Image, Pressable, ScrollView, StyleSheet, Dimensions, FlatList, StatusBar, SafeAreaView, KeyboardAvoidingView, Platform, } from "react-native";
+import { Text, View, TextInput, Alert, TouchableOpacity, Image, Pressable, ScrollView, StyleSheet, Dimensions, FlatList, StatusBar, KeyboardAvoidingView, Platform, } from "react-native";
 import { Theme } from '../Components/Theme';
 import * as Imagepicker from "expo-image-picker"
 import { AppContext } from '../Components/globalVariables';
@@ -8,6 +8,7 @@ import { AppButton } from '../Components/AppButton';
 import { addDoc, collection } from 'firebase/firestore';
 import { errorMessage } from '../Components/formatErrorMessage';
 import { db } from '../Firebase/settings';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export function PostAsset({ navigation }) {
