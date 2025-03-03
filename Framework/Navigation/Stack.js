@@ -11,6 +11,7 @@ import { Pay } from "../Screens/Pay"
 import { Posts } from "../Screens/Posts"
 import { EditPost } from "../Screens/EditPost"
 import { AssetDetails } from "../Screens/AssetDetails"
+import { ForgotPassword } from "../Screens/ForgotPassword"
 
 const Stack = createNativeStackNavigator()
 
@@ -29,6 +30,7 @@ export function StackNavigator() {
                 <Stack.Screen name="Posts" component={Posts} />
                 <Stack.Screen name="AssetDetails" component={AssetDetails} options={{ title: "Asset Details" }} />
                 <Stack.Screen name="EditPost" component={EditPost} options={{ title: "Edit Post" }} />
+                <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ title: "Forgotten Password" }} />
             </Stack.Navigator>
         </NavigationContainer>
     )

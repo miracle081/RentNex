@@ -3,7 +3,7 @@ import React from 'react'
 import { AppButton } from '../Components/AppButton';
 import { Theme } from '../Components/Theme';
 
-export function Intro() {
+export function Intro({ navigation }) {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
